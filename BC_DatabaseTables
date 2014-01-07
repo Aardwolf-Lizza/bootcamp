@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Creating BOOTCAMP Database Tables</title>
+</head>
+<body>
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = 'rootpassword';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully<br />';
+$sql = "CREATE TABLE BC_AARD_AREAS( ".
+       "pk_BC_AARD_AREAS INT NOT NULL AUTO_INCREMENT, ".
+       "AREA_Short_Name VARCHAR(20) NOT NULL, ".
+       "AREA_Name VARCHAR(50) NOT NULL, ".
+       "AREA_Rooms INT, ".
+       "AREA_Level_Min INT, ".
+       "AREA_Level_Max INT, ".
+       "AREA_Portal VARCHAR(50), ".
+       "AREA_Explore_Speedwalk VARCHAR(500), ".
+       "AREA_Explore_Speedwalk_Notes VARCHAR(500), ".
+       "PRIMARY KEY ( pk_BC_AARD_AREAS )); ";
+mysql_select_db( 'BOOTCAMP_DATABASE' );
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not create table: ' . mysql_error());
+}
+echo "Table BC_AARD_AREAS created successfully\n";
+
+$sql = "CREATE TABLE BC_AARD_KEYS( ".
+       "pk_BC_AARD_KEYS INT NOT NULL AUTO_INCREMENT, ".
+       "KEYS_Name VARCHAR(50) NOT NULL, ".
+       "KEYS_Area VARCHAR(50) NOT NULL, ".
+       "KEYS_Location VARCHAR(50), ".
+       "KEYS_GCMP_ID VARCHAR(50), ".
+       "KEYS_Mob VARCHAR(50), ".
+       "KEYS_Level INT, ".
+       "KEYS_Door VARCHAR(50), ".
+       "KEYS_Door_Passable VARCHAR(1), ".
+       "KEYS_Speedwalk VARCHAR(500), ".
+       "PRIMARY KEY ( pk_BC_AARD_KEYS )); ";
+mysql_select_db( 'BOOTCAMP_DATABASE' );
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not create table: ' . mysql_error());
+}
+echo "Table BC_AARD_KEYS created successfully\n";
+mysql_close($conn);
+?>
+</body>
+</html>
