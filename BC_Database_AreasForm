@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Add New AARDWOLF AREA Record in BOOTCAMP Database</title>
+</head>
+<body>
+<?php
+if(isset($_POST['add']))
+{
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = 'rootpassword';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+
+if(! get_magic_quotes_gpc() )
+{
+   $AREA_Short_Name = addslashes ($_POST['AREA_Short_Name']);
+   $AREA_Name = addslashes ($_POST['AREA_Name']);
+   $AREA_Portal = addslashes ($_POST['AREA_Portal']);
+   $AREA_Explore_Speedwalk = addslashes ($_POST['AREA_Explore_Speedwalk']);
+   $AREA_Explore_Speedwalk_Notes = addslashes ($_POST['AREA_Explore_Speedwalk_Notes']);
+}
+else
+{
+   $AREA_Short_Name = $_POST['AREA_Short_Name'];
+   $AREA_Name = $_POST['AREA_Name'];
+   $AREA_Portal = $_POST['AREA_Portal'];
+   $AREA_Explore_Speedwalk = $_POST['AREA_Explore_Speedwalk'];
+   $AREA_Explore_Speedwalk_Notes = $_POST['AREA_Explore_Speedwalk_Notes'];
+}
+$AREA_Rooms = $_POST['AREA_Rooms'];
+$AREA_Level_Min = $_POST['AREA_Level_Min'];
+$AREA_Level_Max = $_POST['AREA_Level_Max'];
+
+$sql = "INSERT INTO BC_AARD_AREAS ".
+       "(AREA_Short_Name,AREA_Name,AREA_Rooms,AREA_Level_Min,AREA_Level_Max,AREA_Portal,AREA_Explore_Speedwalk,AREA_Explore_Speedwalk_Notes) ".
+       "VALUES ".
+       "('$AREA_Short_Name','$AREA_Name','$AREA_Rooms','$AREA_Level_Min','$AREA_Level_Max','$AREA_Portal','$AREA_Explore_Speedwalk','$AREA_Explore_Speedwalk_Notes')";
+mysql_select_db('BOOTCAMP_DATABASE');
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not enter data: ' . mysql_error());
+}
+echo "Entered data successfully\n";
+mysql_close($conn);
+}
+else
+{
+?>
+<form method="post" action="<?php $_PHP_SELF ?>">
+<table width="1200" border="0" cellspacing="1" cellpadding="2">
+<tr>
+<td width="250">Area Short Name</td>
+<td>
+<input name="AREA_Short_Name" type="text" id="AREA_Short_Name">
+</td>
+</tr>
+<tr>
+<td width="250">Area Name</td>
+<td>
+<input name="AREA_Name" type="text" id="AREA_Name">
+</td>
+</tr>
+<tr>
+<td width="250">Area Rooms</td>
+<td>
+<input name="AREA_Rooms" type="text" id="AREA_Rooms">
+</td>
+</tr>
+<tr>
+<td width="250">Area Level(Min)</td>
+<td>
+<input name="AREA_Level_Min" type="text" id="AREA_Level_Min">
+</td>
+</tr>
+<tr>
+<td width="250">Area Level(Max)</td>
+<td>
+<input name="AREA_Level_Max" type="text" id="AREA_Level_Max">
+</td>
+</tr>
+<tr>
+<td width="250">Area Portal</td>
+<td>
+<input name="AREA_Portal" type="text" id="AREA_Portal">
+</td>
+</tr>
+<tr>
+<td width="250">Explore Speedwalk</td>
+<td>
+<input name="AREA_Explore_Speedwalk" type="text" id="AREA_Explore_Speedwalk">
+</td>
+</tr>
+<tr>
+<td width="250">Notes</td>
+<td>
+<input name="AREA_Explore_Speedwalk_Notes" type="text" id="AREA_Explore_Speedwalk_Notes">
+</td>
+</tr>
+<tr>
+<td width="250"> </td>
+<td> </td>
+</tr>
+<tr>
+<td width="250"> </td>
+<td>
+<input name="add" type="submit" id="add" value="Add BOOTCAMP">
+</td>
+</tr>
+</table>
+</form>
+<?php
+}
+?>
+</body>
+</html>
